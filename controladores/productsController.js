@@ -27,7 +27,7 @@ const productsController = {
 
             db.push(productNew);
 
-            fs.writeFileSync("../bd/db.json", JSON.stringify(db));
+            fs.writeFileSync(__dirname + '/db/db.json',JSON.stringify(db));
 
             response = "Se agrego producto correctamente"
         }
@@ -41,10 +41,10 @@ const productsController = {
         if(product){
             let data = req.body;
 
-            if(data.nombre) product.nombre = data.nombre;
-            if(data.precio) product.precio = data.precio;
+            if(data.nombre) product[0].nombre = data.nombre;
+            if(data.precio) product[0].precio = data.precio;
             
-            fs.writeFileSync("../bd/db.json", JSON.stringify(db));
+            fs.writeFileSync(__dirname + '/db/db.json', JSON.stringify(db));
 
             res.send("Se edito correctamente el producto")
         }else {
@@ -55,11 +55,9 @@ const productsController = {
         let id = req.params.id;
         
         if(db.find(el => el.id == id)){
-            let products = db.filter(el => el.id != id)
-            
-            db = products;
+            let products = db.filter(el => el.id != id);
 
-            fs.writeFileSync("../bd/db.json", JSON.stringify(db));
+            fs.writeFileSync(__dirname + '/db/db.json', JSON.stringify(products));
             res.send("Se borro correctamente el producto")
         }else {
             res.send('No se encontro el producto')
